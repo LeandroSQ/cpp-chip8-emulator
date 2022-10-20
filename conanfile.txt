@@ -1,0 +1,10 @@
+[requires]
+sdl/2.24.0
+imgui/cci.20220621+1.88.docking
+
+[generators]
+cmake
+
+[imports]
+./res/bindings, *.cpp -> ../bindings
+./res/bindings, *.h -> ../bindings

@@ -1,0 +1,44 @@
+# Common settings
+# BasedOnStyle: Microsoft
+TabWidth: 4
+IndentWidth: 4
+UseTab: Always
+ColumnLimit: 120
+
+Language: Cpp
+SpacesInLineCommentPrefix:
+    Minimum: 1
+    Maximum: 1
+AllowShortFunctionsOnASingleLine: Empty
+DerivePointerAlignment: false
+PointerAlignment: Left
+AlignConsecutiveAssignments: false
+AlignAfterOpenBracket: BlockIndent
+BinPackArguments: false
+SpacesInSquareBrackets: false
+AllowShortIfStatementsOnASingleLine: true
+IndentCaseLabels: true
+IndentPPDirectives: BeforeHash
+PPIndentWidth: 1
+Cpp11BracedListStyle: false
+SpaceInEmptyBlock: true
+KeepEmptyLinesAtTheStartOfBlocks: false
+PackConstructorInitializers: NextLine
+BreakConstructorInitializers: BeforeColon
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterEnum: false
+  AfterStruct: false
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: Never
+  AfterFunction: false
+  AfterNamespace: false
+  AfterObjCDeclaration: false
+  AfterUnion: false
+  BeforeCatch: false
+  BeforeElse: false
+  IndentBraces: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+  SplitEmptyFunction: false
