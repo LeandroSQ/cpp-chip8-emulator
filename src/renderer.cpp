@@ -1,25 +1,36 @@
 #include "renderer.hpp"
-#include "logger.hpp"
 #include "../bindings/imgui_impl_sdl.h"
 #include "../bindings/imgui_impl_sdlrenderer.h"
+#include "logger.hpp"
 #include <SDL2/SDL.h>
 
-Renderer::Renderer() {
+Renderer::Renderer(Settings& settings) : settings(settings) { }
 
-}
-
-Renderer::~Renderer() {
-
-}
+Renderer::~Renderer() { }
 
 void Renderer::render(Window& window) {
 	uint8_t* pixels = window.getPixelsBuffer();
 
-    // Copy the video buffer to the frame buffer texture
+	// Copy the video buffer to the frame buffer texture
 	for (uint8_t y = 0; y < window.viewport.height; y++) {
 		for (uint8_t x = 0; x < window.viewport.width; x++) {
-			uint8_t color = getPixel(x, y);
-            setPixel(window, pixels, x, y, color);
+			uint16_t index = (y * window.viewport.width) + x;
+			uint8_t currentColor = videoBuffer[index];
+			uint8_t& bufferColor = lastFrameBuffer[index];
+
+            if (!settings.isFrameInterpolationEnabled) bufferColor = currentColor;
+            else if (currentColor == 0xFF) bufferColor = 0xFF;
+
+            setPixel(window, pixels, x, y, bufferColor);
+
+            if (settings.isFrameInterpolationEnabled && currentColor != 0xFF) {
+                constexpr uint8_t step = 0x80;
+                if (bufferColor > step) {
+                    bufferColor -= step;
+                } else {
+                    bufferColor = 0;
+                }
+            }
 		}
 	}
 }
@@ -49,17 +60,17 @@ void Renderer::setPixel(const Window& window, uint8_t* pixels, uint16_t x, uint1
 }
 
 void Renderer::fill(uint8_t color) {
-    memset(videoBuffer, color, sizeof(videoBuffer));
+	memset(videoBuffer, color, sizeof(videoBuffer));
 }
 
 void Renderer::setPixel(uint16_t x, uint16_t y, uint8_t color) {
-    videoBuffer[x + (y * Renderer::width)] = color;
+	videoBuffer[x + (y * Renderer::width)] = color;
 }
 
 uint8_t Renderer::getPixel(uint16_t x, uint16_t y) {
-    return videoBuffer[x + (y * Renderer::width)];
+	return videoBuffer[x + (y * Renderer::width)];
 }
 
 void Renderer::togglePixel(uint16_t x, uint16_t y) {
-    videoBuffer[x + (y * Renderer::width)] ^= 0xFF;
+	videoBuffer[x + (y * Renderer::width)] ^= 0xFF;
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "logger.hpp"
+#include "settings.hpp"
 #include "cpu.hpp"
 #include "memory.hpp"
 #include "input.hpp"
@@ -8,10 +9,11 @@
 
 class Emulator {
   public:
+    Settings settings;
     CPU cpu;
     Memory memory;
-    Input input;
-    Renderer renderer;
+    Input input = Input(settings);
+    Renderer renderer = Renderer(settings);
     Audio audio;
 
     Emulator();

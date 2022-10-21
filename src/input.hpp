@@ -1,13 +1,15 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <cstdint>
+#include "settings.hpp"
 
 class Input {
   private:
 	bool keys[16] = { false };
+    Settings& settings;
 
   public:
-	Input();
+	Input(Settings& settings);
 
 	~Input();
 

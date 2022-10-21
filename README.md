@@ -1,6 +1,5 @@
 # CHIP8 Emulator/Interpreter
-This is a [CHIP8](https://en.wikipedia.org/wiki/CHIP-8) emulator/interpreter written in C++.
-Using [SDL2](https://www.libsdl.org/) for graphics and input.
+Yet another [CHIP8](https://en.wikipedia.org/wiki/CHIP-8) emulator/interpreter. Written in C++ using [SDL2](https://www.libsdl.org/) for graphics and input.
 
 <p align="center">
     <img src=".github/spaceinvaders.png" height="200px">
@@ -17,7 +16,28 @@ Using [SDL2](https://www.libsdl.org/) for graphics and input.
 4. Run `./build/bin/chip8` passing the ROM file as argument
     1. Example: `./build/bin/chip8 'roms/invaders.bin'`
 
-## Memory map
+## Features
+### Frame interpolation
+Some games can present flickery graphics, this is due to the Graphic system on CHIP8, consistently XORing the video buffer + no synchronization support. To smooth out this effect the emulator provides double frame interpolation, which can be toggled by pressing `SPACE`.
+<p align="center">
+    <img src=".github/flickering1.gif" height="150px">
+    <img src=".github/flickering2.gif" height="150px">
+    <br>
+    <small>Regular CHIP8 flickering vs Frame interpolated CHIP8 </small>
+</p>
+
+### Verbose mode
+
+You can `#define VERBOSE` for extra debug information.
+Which includes all the opcodes, their arguments and an explanation of what they do. In real time, performance impact is negligible.
+<p align="center">
+    <img src=".github/debug.png">
+</p>
+In the future, using a logic like this to implement a disassembler would be nice.
+
+
+## Architecture
+### Memory map
 <pre align="left">
 +-----------------------+
 | 0x0050 - 0x01FF       | - Reserved memory (contains font set in emu)
@@ -28,7 +48,7 @@ Using [SDL2](https://www.libsdl.org/) for graphics and input.
 +-----------------------+
 </pre>
 
-## Input map
+### Input map
 The CHIP-8 has a HEX based keypad (0x0-0xF), which maps to the following key-matrix:
 <pre align="center">
 ╔═══╦═══╦═══╦═══╗                        ╔═══╦═══╦═══╦═══╗
@@ -42,23 +62,14 @@ The CHIP-8 has a HEX based keypad (0x0-0xF), which maps to the following key-mat
 ╚═══╩═══╩═══╩═══╝                        ╚═══╩═══╩═══╩═══╝
 </pre>
 
-## Verbose mode
-
-You can `#define VERBOSE` for extra debug information.
-Which includes all the opcodes, their arguments and an explanation of what they do. In real time, performance impact is negligible.
-<p align="center">
-    <img src=".github/debug.png">
-</p>
-In the future, using a logic like this to implement a disassembler would be nice.
-
-## Audio
+### Audio
 This emulator uses [SDL2](https://www.libsdl.org/) for audio. Generating a sine wave with a frequency of 440Hz for 1/60th of a second. This is the same frequency as the original CHIP-8.
 
-## Instruction set
+### Instruction set
 
 | Instruction | Description |
 | -- | -- |
-|0NNN|Execute machine language subroutine at address NNN|
+|0NNN|Not supported|
 |00E0|Clear the screen|
 |00EE|Return from a subroutine|
 |1NNN|Jump to address NNN|
@@ -98,28 +109,29 @@ This emulator uses [SDL2](https://www.libsdl.org/) for audio. Generating a sine 
 
 For when I have spare time:
 
-- [] Create a Graphical User Interface using Dear ImGui
-  - [] Load ROM files within the GUI
-  - [] Implement a register view within the GUI
-  - [] Implement a stack view within the GUI
-  - [] Implement a dissasembler view within the GUI
-  - [] Implement a memory view within the GUI
-  - [] Implement a keypad view within the GUI
-  - [] Implement a screen view within the GUI
-  - [] Implement a debug view within the GUI
-  - [] Implement a settings view within the GUI
-    - [] Define a CLOCK hz
-    - [] Define a Frame Rate hz
-    - [] Define the screen size
-    - [] Define the screen scale
-    - [] Define the screen color
-    - [] Define the audio frequency
+- [ ] Create a Graphical User Interface using Dear ImGui
+  - [ ] Load ROM files within the GUI
+  - [ ] Implement a register view within the GUI
+  - [ ] Implement a stack view within the GUI
+  - [ ] Implement a dissasembler view within the GUI
+  - [ ] Implement a memory view within the GUI
+  - [ ] Implement a keypad view within the GUI
+  - [ ] Implement a screen view within the GUI
+  - [ ] Implement a debug view within the GUI
+  - [ ] Implement a settings view within the GUI
+    - [ ] Define a CLOCK hz
+    - [ ] Define a Frame Rate hz
+    - [ ] Define the screen size
+    - [ ] Define the screen scale
+    - [ ] Define the screen color
+    - [ ] Define the audio frequency
 
 ## References
 | Name | Description |
 | -- | -- |
 | [Corax89's - CHIP8 Test room](https://github.com/corax89/chip8-test-rom) | Used for testing |
 | [Zophar's domain - CHIP8 Game room pack](https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html) | Used for rooms |
-| [Austin Morlan's - CHIP8 article](https://austinmorlan.com/posts/chip8_emulator/#16-8-bit-registers) | Used as reference |
+| [Austin Morlan's - CHIP8 Article](https://austinmorlan.com/posts/chip8_emulator/#16-8-bit-registers) | Used as reference |
 | [Matt Mikolay's - CHIP8 Reference](https://github.com/mattmikolay/chip-8/wiki/) | Used as reference |
 | [Wikipedia - CHIP8 Page](https://en.wikipedia.org/wiki/CHIP-8) | Used as reference |
+| [faizilham's - CHIP8 Article](https://faizilham.github.io/revisiting-chip8) | Inspiration for the Frame interpolation feature |

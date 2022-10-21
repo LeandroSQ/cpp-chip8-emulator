@@ -20,7 +20,7 @@ uint16_t frameCounter = 0;
 
 // CPU cycle counter
 double cpuTimer = 0.0;
-double targetCPURate = 1.0 / 1000.0;
+double targetCPURate = 1.0 / 500.0;
 uint16_t cycleCounter = 0;
 
 inline void handleCPUCycles() {
@@ -42,7 +42,7 @@ inline void handleRendererFrames() {
 	// Update frame timer
 	frameTimer += deltaTime;
 	if (frameTimer >= targetFrameRate) {
-		// Start rendering the frame
+        // Start rendering the frame
 		window.startFrame();
 		emulator.renderer.render(window);
 		window.endFrame();
@@ -98,7 +98,6 @@ int main(int argc, char** argv) {
     // Initialize the emulator
     if (emulator.init() < 0) return 1;
     // Load custom ROM
-	// if (emulator.loadROM("roms/invaders.bin") < 0) return 1;
     if (handleArgs(argc, argv) < 0) return 1;
 
 	// Initialize the window

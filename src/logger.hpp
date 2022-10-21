@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-#define VERBOSE
+// #define VERBOSE
 
 class Log {
   private:

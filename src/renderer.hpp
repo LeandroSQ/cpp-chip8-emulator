@@ -6,7 +6,7 @@ class Renderer {
 	static constexpr uint8_t width = 64;
 	static constexpr uint8_t height = 32;
 
-	Renderer();
+	Renderer(Settings& settings);
 
 	~Renderer();
 
@@ -21,7 +21,9 @@ class Renderer {
     void togglePixel(uint16_t x, uint16_t y);
 
   private:
+    Settings& settings;
 	uint8_t videoBuffer[Renderer::width * Renderer::height] = { 0 };
+	uint8_t lastFrameBuffer[Renderer::width * Renderer::height] = { 0 };
 
 	void setPixel(const Window& window, uint8_t* pixels, uint16_t x, uint16_t y, uint8_t color);
 };

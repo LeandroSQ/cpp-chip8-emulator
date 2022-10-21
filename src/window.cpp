@@ -1,6 +1,4 @@
 #include "window.hpp"
-#include "../bindings/imgui_impl_sdl.h"
-#include "../bindings/imgui_impl_sdlrenderer.h"
 #include "logger.hpp"
 
 Window::Window() { }
