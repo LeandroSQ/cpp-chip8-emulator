@@ -18,7 +18,7 @@ Yet another [CHIP8](https://en.wikipedia.org/wiki/CHIP-8) emulator/interpreter. 
 
 ## Features
 ### Frame interpolation
-Some games can present flickery graphics, this is due to the Graphic system on CHIP8, consistently XORing the video buffer + no synchronization support. To smooth out this effect the emulator provides double frame interpolation, which can be toggled by pressing `SPACE`.
+Some games can present flickery graphics, this is due to the Graphic system on CHIP8 consistently XORing the video buffer + no synchronization support. To smooth out this effect the emulator provides double frame interpolation, which can be toggled by pressing `SPACE`.
 <p align="center">
     <img src=".github/flickering1.gif" height="150px">
     <img src=".github/flickering2.gif" height="150px">
@@ -26,14 +26,20 @@ Some games can present flickery graphics, this is due to the Graphic system on C
     <small>Regular CHIP8 flickering vs Frame interpolated CHIP8 </small>
 </p>
 
+### Disassembler
+The emulator provides a disassembler, which can be accessed by passing `--disassemble` as argument. This will print the disassembled code to the console and exit.
+
+<p align="center">
+    <img src=".github/disassembler.png">
+</p>
+
 ### Verbose mode
 
 You can `#define VERBOSE` for extra debug information.
-Which includes all the opcodes, their arguments and an explanation of what they do. In real time, performance impact is negligible.
+Which includes all the opcodes, their arguments and an explanation of what they do in real time, performance impact is negligible.
 <p align="center">
     <img src=".github/debug.png">
 </p>
-In the future, using a logic like this to implement a disassembler would be nice.
 
 
 ## Architecture
@@ -42,9 +48,7 @@ In the future, using a logic like this to implement a disassembler would be nice
 +-----------------------+
 | 0x0050 - 0x01FF       | - Reserved memory (contains font set in emu)
 +-----------------------+
-| 0x0200 - 0x0FFF       | - Program ROM and work RAM
-+-----------------------+
-| 0x1FFF - 0xFFFF       | - Not used
+| 0x0200 - 0x1000       | - Program ROM and work RAM
 +-----------------------+
 </pre>
 
@@ -108,7 +112,7 @@ This emulator uses [SDL2](https://www.libsdl.org/) for audio. Generating a sine 
 ## Roadmap
 
 For when I have spare time:
-
+- [x] Disassembler
 - [ ] Create a Graphical User Interface using Dear ImGui
   - [ ] Load ROM files within the GUI
   - [ ] Implement a register view within the GUI
@@ -135,3 +139,4 @@ For when I have spare time:
 | [Matt Mikolay's - CHIP8 Reference](https://github.com/mattmikolay/chip-8/wiki/) | Used as reference |
 | [Wikipedia - CHIP8 Page](https://en.wikipedia.org/wiki/CHIP-8) | Used as reference |
 | [faizilham's - CHIP8 Article](https://faizilham.github.io/revisiting-chip8) | Inspiration for the Frame interpolation feature |
+| [fluentcpp.com - Warning article](https://www.fluentcpp.com/2019/08/30/how-to-disable-a-warning-in-cpp/) | Used to disable useless warnings due to macro conditions |
