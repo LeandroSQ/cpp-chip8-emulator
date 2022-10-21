@@ -98,22 +98,22 @@ This emulator uses [SDL2](https://www.libsdl.org/) for audio. Generating a sine 
 
 For when I have spare time:
 
-- [] Create a Graphical User Interface using Dear ImGui
-  - [] Load ROM files within the GUI
-  - [] Implement a register view within the GUI
-  - [] Implement a stack view within the GUI
-  - [] Implement a dissasembler view within the GUI
-  - [] Implement a memory view within the GUI
-  - [] Implement a keypad view within the GUI
-  - [] Implement a screen view within the GUI
-  - [] Implement a debug view within the GUI
-  - [] Implement a settings view within the GUI
-    - [] Define a CLOCK hz
-    - [] Define a Frame Rate hz
-    - [] Define the screen size
-    - [] Define the screen scale
-    - [] Define the screen color
-    - [] Define the audio frequency
+- [ ] Create a Graphical User Interface using Dear ImGui
+  - [ ] Load ROM files within the GUI
+  - [ ] Implement a register view within the GUI
+  - [ ] Implement a stack view within the GUI
+  - [ ] Implement a dissasembler view within the GUI
+  - [ ] Implement a memory view within the GUI
+  - [ ] Implement a keypad view within the GUI
+  - [ ] Implement a screen view within the GUI
+  - [ ] Implement a debug view within the GUI
+  - [ ] Implement a settings view within the GUI
+    - [ ] Define a CLOCK hz
+    - [ ] Define a Frame Rate hz
+    - [ ] Define the screen size
+    - [ ] Define the screen scale
+    - [ ] Define the screen color
+    - [ ] Define the audio frequency
 
 ## References
 | Name | Description |
