@@ -7,6 +7,16 @@ CPU::CPU() { }
 
 CPU::~CPU() { }
 
+void dumpRegisters(uint8_t* registers, uint16_t indexRegister, uint8_t stackPointer, uint16_t programCounter) {
+    Log::debug("[CPU] -- \t Registers: \t --");
+    for (unsigned long i = 0; i < 16L; i++) {
+        Log::info("[CPU] V", toHex(i, 1), "\t: 0x", toHex(registers[i], 2));
+    }
+    Log::debug("[CPU] I\t: 0x", toHex(indexRegister, 4));
+    Log::debug("[CPU] PC\t: 0x", toHex(programCounter, 2));
+    Log::debug("[CPU] SP\t: 0x", toHex(stackPointer, 4));
+}
+
 void CPU::execute(uint16_t opcode, Memory& memory, Input& input, Renderer& renderer) {
 	// TODO: Move this to each instruction
 	const uint16_t nnn = opcode & 0x0FFF;
@@ -17,12 +27,12 @@ void CPU::execute(uint16_t opcode, Memory& memory, Input& input, Renderer& rende
 
 	switch ((opcode & 0xF000) >> 12) {
 		case 0x0:
-			switch (opcode & 0x000F) {
-				case 0x0:
+			switch (opcode & 0x00FF) {
+				case 0xE0:
 					// 00E0 - CLS
 					opcode00E0(renderer);
 					break;
-				case 0xE:
+				case 0xEE:
 					// 00EE - RET
 					opcode00EE();
 					break;
@@ -301,7 +311,13 @@ void CPU::opcode8XY3(uint8_t x, uint8_t y) {
 
 void CPU::opcode8XY4(uint8_t x, uint8_t y) {
 	// Add Vy to Vx, set VF to 1 if there is a carry, and 0 if there isn't
-	Log::debug("[CPU] 8XY4 - Add V", toHex(y, 0), " to V", toHex(x, 0), ", set VF to 1 if there is a carry, and 0 if there isn't");
+	Log::debug(
+		"[CPU] 8XY4 - Add V",
+		toHex(y, 0),
+		" to V",
+		toHex(x, 0),
+		", set VF to 1 if there is a carry, and 0 if there isn't"
+	);
 
 	registers[0xF] = (registers[x] + registers[y] > 0xFF) ? 1 : 0;
 	registers[x] += registers[y];
@@ -310,7 +326,11 @@ void CPU::opcode8XY4(uint8_t x, uint8_t y) {
 void CPU::opcode8XY5(uint8_t x, uint8_t y) {
 	// Subtract Vy from Vx, set VF to 0 if there is a borrow, and 1 if there isn't
 	Log::debug(
-		"[CPU] 8XY5 - Subtract V", toHex(y, 0), " from V", toHex(x, 0), ", set VF to 0 if there is a borrow, and 1 if there isn't"
+		"[CPU] 8XY5 - Subtract V",
+		toHex(y, 0),
+		" from V",
+		toHex(x, 0),
+		", set VF to 0 if there is a borrow, and 1 if there isn't"
 	);
 
 	registers[0xF] = (registers[x] > registers[y]) ? 1 : 0;
@@ -350,7 +370,11 @@ void CPU::opcode8XY7(uint8_t x, uint8_t y) {
 void CPU::opcode8XYE(uint8_t x) {
 	// Store the most significant bit of Vx in VF and then shift Vx to the left by 1
 	Log::debug(
-		"[CPU] 8XYE - Store the most significant bit of V", toHex(x, 0), " in VF and then shift V", toHex(x, 0), " to the left by 1"
+		"[CPU] 8XYE - Store the most significant bit of V",
+		toHex(x, 0),
+		" in VF and then shift V",
+		toHex(x, 0),
+		" to the left by 1"
 	);
 
 	registers[0xF] = registers[x] >> 7;
@@ -390,7 +414,9 @@ void CPU::opcodeCXNN(uint8_t x, uint8_t nn) {
 
 void CPU::opcodeDXYN(uint8_t x, uint8_t y, uint8_t n, Memory& memory, Renderer& renderer) {
 	// Draw a sprite at coordinate (Vx, Vy) that has a width of 8 pixels and a height of N pixels
-	Log::debug("[CPU] DXYN - Draw sprite at (V", toHex(x, 0), ", V", toHex(y, 0), ") with width 8 and height 0x", toHex(n, 0));
+	Log::debug(
+		"[CPU] DXYN - Draw sprite at (V", toHex(x, 0), ", V", toHex(y, 0), ") with width 8 and height 0x", toHex(n, 0)
+	);
 
 	// Clamp the position within the viewport
 	uint8_t positionX = registers[x] % Renderer::width;
@@ -487,14 +513,16 @@ void CPU::opcodeFX29(uint8_t x) {
 	// Set I to the location of the sprite for the character in Vx
 	Log::debug("[CPU] FX29 - Set I to the location of the sprite for the character in V", toHex(x, 0));
 
-    constexpr uint8_t spriteSize = 5;
-    indexRegister = Memory::fontSetStart + registers[x] * spriteSize;
+	constexpr uint8_t spriteSize = 5;
+	indexRegister = Memory::fontSetStart + registers[x] * spriteSize;
 }
 
 void CPU::opcodeFX33(uint8_t x, Memory& memory) {
 	// Store the binary-coded decimal representation of Vx at the addresses I, I + 1, and I + 2
 	Log::debug(
-		"[CPU] FX33 - Store the binary-coded decimal representation of V", toHex(x, 0), " at the addresses I, I + 1, and I + 2"
+		"[CPU] FX33 - Store the binary-coded decimal representation of V",
+		toHex(x, 0),
+		" at the addresses I, I + 1, and I + 2"
 	);
 
 	uint8_t value = registers[x];
@@ -526,39 +554,25 @@ void CPU::opcodeFX65(uint8_t x, Memory& memory) {
 }
 #pragma endregion Opcodes
 
-void CPU::updateTimers(double deltaTime) {
-	// Update the timer 60 times per second
-	constexpr double timerFrequency = 1.0 / 60.0;
-
-	timerAccumulator += deltaTime;
-
-	// Update the timers if enough time has passed
-	if (timerAccumulator >= timerFrequency) {
-		// Decrement the timers if they are greater than 0
-		if (delayTimer > 0) delayTimer--;
-		if (soundTimer > 0) soundTimer--;
-
-		// Reset the accumulator
-		timerAccumulator -= timerFrequency;
-	}
+void CPU::updateTimers() {
+	// Decrement the timers if they are greater than 0
+	if (delayTimer > 0) delayTimer--;
+	if (soundTimer > 0) soundTimer--;
 }
 
 void CPU::reset() {
-    // Reset the registers and memory
-    memset(registers, 0, sizeof(registers));
-    memset(stack, 0, sizeof(stack));
+	// Reset the registers and memory
+	memset(registers, 0, sizeof(registers));
+	memset(stack, 0, sizeof(stack));
 
-    // Reset the timers
-    delayTimer = 0;
-    soundTimer = 0;
+	// Reset the timers
+	delayTimer = 0;
+	soundTimer = 0;
 
-    // Reset the program counter and index register
-    programCounter = Memory::programStart;
-    indexRegister = 0;
+	// Reset the program counter and index register
+	programCounter = Memory::programStart;
+	indexRegister = 0;
 
-    // Reset the stack pointer
-    stackPointer = 0;
-
-    // Reset the accumulator
-    timerAccumulator = 0.0;
+	// Reset the stack pointer
+	stackPointer = 0;
 }

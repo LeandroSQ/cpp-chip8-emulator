@@ -3,19 +3,18 @@
 #include "util.hpp"
 #include <stdexcept>
 
-Memory::Memory() {
-}
+Memory::Memory() { }
 
 Memory::~Memory() { }
 
 int8_t Memory::init() {
-    loadFontset();
+	loadFontset();
 
-    return 0;
+	return 0;
 }
 
 void Memory::loadFontset() {
-    Log::info("[Memory] Loading fontset...");
+	Log::info("[Memory] Loading fontset...");
 
 	// Define the sizing
 	constexpr uint8_t charCount = 16;
@@ -86,9 +85,9 @@ void Memory::write(uint16_t address, uint8_t* value) {
 }
 
 void Memory::reset() {
-    Log::info("[Memory] Resetting memory...");
+	Log::debug("[Memory] Resetting memory...");
 
-    memset(data, 0, sizeof(data));
+	memset(data, 0, sizeof(data));
 
-    loadFontset();
+	loadFontset();
 }

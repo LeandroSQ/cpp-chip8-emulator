@@ -25,7 +25,7 @@ int8_t Window::init() {
 }
 
 int8_t Window::createWindow() {
-    Log::info("[Window] Creating window...");
+	Log::info("[Window] Creating window...");
 
 	// Create the window
 	sdlWindowHandle = SDL_CreateWindow(
@@ -48,22 +48,25 @@ int8_t Window::createWindow() {
 		return -1;
 	}
 
-    // Fetch the backend renderer context
-    SDL_RendererInfo rendererInfo;
+	// Fetch the backend renderer context
+	SDL_RendererInfo rendererInfo;
 	SDL_GetRendererInfo(sdlRendererHandle, &rendererInfo);
-    Log::info("[Window] SDL renderer backend: ", rendererInfo.name);
-    Log::info("[Window] Viewport scaling: ", pixelScale, "x");
-
+	Log::info("[Window] SDL renderer backend: ", rendererInfo.name);
+	Log::info("[Window] Viewport scaling: ", pixelScale, "x");
 
 	return 0;
 }
 
 int8_t Window::createFrameBuffer() {
-    Log::info("[Window] Allocating frame buffer...");
+	Log::info("[Window] Allocating frame buffer...");
 
 	// Create the texture
 	frameBuffer = SDL_CreateTexture(
-		sdlRendererHandle, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, logicalViewport.width, logicalViewport.height
+		sdlRendererHandle,
+		SDL_PIXELFORMAT_ARGB8888,
+		SDL_TEXTUREACCESS_STREAMING,
+		logicalViewport.width,
+		logicalViewport.height
 	);
 
 	if (frameBuffer == nullptr) {
@@ -75,28 +78,28 @@ int8_t Window::createFrameBuffer() {
 }
 
 void Window::pollEvents(Input& input) {
-    SDL_Event event;
-    SDL_PollEvent(&event);
+	SDL_Event event;
+	SDL_PollEvent(&event);
 
-    if (event.type == SDL_QUIT) {
-        Log::info("[Window] Window quit event received, exiting...");
-        isClosed = true;
-    } else if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
-        Log::debug("[Window] Key event received, updating emulator state...");
-        input.update(event);
-    }
+	if (event.type == SDL_QUIT) {
+		Log::info("[Window] Window quit event received, exiting...");
+		isClosed = true;
+	} else if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
+		Log::debug("[Window] Key event received, updating emulator state...");
+		input.update(event);
+	}
 }
 
 void Window::startFrame() {
-    // Lock the texture and acquire the pixel data
+	// Lock the texture and acquire the pixel data
 	SDL_LockTexture(frameBuffer, nullptr, &pixels, &pitch);
 }
 
 void Window::endFrame() {
-    // Unlocks the frame buffer
-    SDL_UnlockTexture(frameBuffer);
+	// Unlocks the frame buffer
+	SDL_UnlockTexture(frameBuffer);
 
-    // Clear the back buffer
+	// Clear the back buffer
 	SDL_RenderClear(sdlRendererHandle);
 	// Copy the texture into the back buffer
 	SDL_RenderCopy(sdlRendererHandle, frameBuffer, nullptr, nullptr);
@@ -105,9 +108,9 @@ void Window::endFrame() {
 }
 
 void Window::updateTitle(std::string title) {
-    SDL_SetWindowTitle(sdlWindowHandle, title.c_str());
+	SDL_SetWindowTitle(sdlWindowHandle, title.c_str());
 }
 
 uint8_t* Window::getPixelsBuffer() {
-    return (uint8_t*)pixels;
+	return (uint8_t*)pixels;
 }

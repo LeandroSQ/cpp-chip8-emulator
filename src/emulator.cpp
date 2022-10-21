@@ -1,86 +1,67 @@
 #include "emulator.hpp"
 #include <fstream>
 
-Emulator::Emulator() {
+Emulator::Emulator() { }
 
-}
-
-Emulator::~Emulator() {
-
-}
+Emulator::~Emulator() { }
 
 int8_t Emulator::init() {
-    Log::info("[Emulator] Initializing...");
+	Log::info("[Emulator] Initializing...");
 
-    if (audio.init() < 0) return -1;
-    if (memory.init() < 0) return -1;
+	if (audio.init() < 0) return -1;
+	if (memory.init() < 0) return -1;
 
-    return 0;
+	return 0;
 }
 
-int8_t Emulator::loadROM(const char* path) {
-    Log::info("[Emulator] Loading ROM '", path, "'...");
+void Emulator::loadROM(const uint8_t* data) {
+	Log::info("[Emulator] Loading ROM...");
 
-    std::ifstream file(path, std::ios::binary | std::ios::ate);
+	// Reset the emulator
+	reset();
 
-    if (file.good()) {
-        // Get the file size
-        std::streamsize size = file.tellg();
-        file.seekg(0, std::ios::beg);
-
-        // Allocate memory for the ROM
-        char* buffer = new char[size];
-
-        // Read the ROM into the buffer
-        if (file.read(buffer, size)) {
-            // Copy the buffer into the memory
-            for (long i = 0; i < size; i++) {
-                memory.write(Memory::programStart + i, buffer[i]);
-            }
-
-            // Free the buffer
-            delete[] buffer;
-
-            return 0;
-        } else {
-            // Free the buffer
-            delete[] buffer;
-
-            Log::error("[Emulator] Failed to load ROM, couldn't read file!");
-            return 1;
-        }
-    } else {
-        Log::error("[Emulator] Failed to load ROM, couldn't open file!");
-        return -1;
-    }
+	// Load the ROM into memory
+	for (unsigned long i = 0; i < sizeof(data); i++) {
+		memory.write(Memory::programStart + i, data[i]);
+	}
 }
 
 void Emulator::cycle() {
-    // Fetch the current opcode from memory
-    uint16_t opcode = memory.read(cpu.programCounter) << 8 | memory.read(cpu.programCounter + 1);
+	// Check if the emulator is halted
+	if (cpu.programCounter >= memory.size) {
+		Log::error("[Emulator] Program counter out of bounds!");
+		isHalted = true;
+		return;
+	}
 
-    // Increment the program counter
-    cpu.programCounter += sizeof(uint16_t);
+	// Fetch the current opcode from memory
+	uint16_t opcode = memory.read(cpu.programCounter) << 8 | memory.read(cpu.programCounter + 1);
 
-    // Decode the opcode
-    cpu.execute(opcode, memory, input, renderer);
+    Log::debug("[Emulator] Opcode: 0x", toHex(opcode, 4));
+
+	// Increment the program counter
+	cpu.programCounter += sizeof(uint16_t);
+
+	// Decode the opcode
+	cpu.execute(opcode, memory, input, renderer);
 }
 
-void Emulator::updateTimers(double deltaTime) {
-    cpu.updateTimers(deltaTime);
+void Emulator::updateTimers() {
+	cpu.updateTimers();
 
-    // Check for sound timer
-    if (cpu.soundTimer > 0) {
-        audio.play();
-    } else {
-        audio.stop();
-    }
+	// Check for sound timer
+	if (cpu.soundTimer > 0) {
+		audio.play();
+	} else {
+		audio.stop();
+	}
 }
 
 void Emulator::reset() {
-    cpu.reset();
-    memory.reset();
-    input.reset();
-    renderer.fill(0x00);
-    audio.reset();
+	isHalted = false;
+	cpu.reset();
+	memory.reset();
+	input.reset();
+	renderer.fill(0x00);
+	audio.reset();
 }

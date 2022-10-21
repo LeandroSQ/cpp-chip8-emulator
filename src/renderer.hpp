@@ -18,10 +18,10 @@ class Renderer {
 
 	uint8_t getPixel(uint16_t x, uint16_t y);
 
-    void togglePixel(uint16_t x, uint16_t y);
+	void togglePixel(uint16_t x, uint16_t y);
 
   private:
-    Settings& settings;
+	Settings& settings;
 	uint8_t videoBuffer[Renderer::width * Renderer::height] = { 0 };
 	uint8_t lastFrameBuffer[Renderer::width * Renderer::height] = { 0 };
 

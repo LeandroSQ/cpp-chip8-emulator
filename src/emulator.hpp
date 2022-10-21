@@ -1,32 +1,34 @@
 #pragma once
-#include "logger.hpp"
-#include "settings.hpp"
-#include "cpu.hpp"
-#include "memory.hpp"
-#include "input.hpp"
-#include "renderer.hpp"
 #include "audio.hpp"
+#include "cpu.hpp"
+#include "input.hpp"
+#include "logger.hpp"
+#include "memory.hpp"
+#include "renderer.hpp"
+#include "settings.hpp"
 
 class Emulator {
   public:
-    Settings settings;
-    CPU cpu;
-    Memory memory;
-    Input input = Input(settings);
-    Renderer renderer = Renderer(settings);
-    Audio audio;
+	Settings settings;
+	CPU cpu;
+	Memory memory;
+	Input input = Input(settings);
+	Renderer renderer = Renderer(settings);
+	Audio audio;
 
-    Emulator();
+	bool isHalted = false;
 
-    ~Emulator();
+	Emulator();
 
-    int8_t init();
+	~Emulator();
 
-    int8_t loadROM(const char* path);
+	int8_t init();
 
-    void cycle();
+	void loadROM(const uint8_t* data);
 
-    void updateTimers(double deltaTime);
+	void cycle();
 
-    void reset();
+	void updateTimers();
+
+	void reset();
 };

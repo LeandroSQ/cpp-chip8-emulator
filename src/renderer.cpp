@@ -18,19 +18,19 @@ void Renderer::render(Window& window) {
 			uint8_t currentColor = videoBuffer[index];
 			uint8_t& bufferColor = lastFrameBuffer[index];
 
-            if (!settings.isFrameInterpolationEnabled) bufferColor = currentColor;
-            else if (currentColor == 0xFF) bufferColor = 0xFF;
+			if (!settings.isFrameInterpolationEnabled) bufferColor = currentColor;
+			else if (currentColor == 0xFF) bufferColor = 0xFF;
 
-            setPixel(window, pixels, x, y, bufferColor);
+			setPixel(window, pixels, x, y, bufferColor);
 
-            if (settings.isFrameInterpolationEnabled && currentColor != 0xFF) {
-                constexpr uint8_t step = 0x80;
-                if (bufferColor > step) {
-                    bufferColor -= step;
-                } else {
-                    bufferColor = 0;
-                }
-            }
+			if (settings.isFrameInterpolationEnabled && currentColor != 0xFF) {
+				constexpr uint8_t step = 0x80;
+				if (bufferColor > step) {
+					bufferColor -= step;
+				} else {
+					bufferColor = 0;
+				}
+			}
 		}
 	}
 }

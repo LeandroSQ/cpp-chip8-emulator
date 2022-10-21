@@ -1,9 +1,9 @@
 #include "random.hpp"
-#include <iostream>
 #include "logger.hpp"
+#include <iostream>
 
 void Random::init() {
-    Log::info("[Random] Initializing...");
+	Log::info("[Random] Initializing...");
 	srand(time(NULL));
 }
 

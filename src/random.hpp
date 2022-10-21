@@ -3,7 +3,7 @@
 
 class Random {
   public:
-    static void init();
+	static void init();
 
-    static uint8_t byte();
+	static uint8_t byte();
 };

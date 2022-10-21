@@ -67,7 +67,11 @@
         "variant": "cpp",
         "algorithm": "cpp",
         "format": "cpp",
-        "__availability": "cpp"
+        "__availability": "cpp",
+        "deque": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "stack": "cpp"
     },
     "cSpell.words": [
         "ANNN",
