@@ -24,7 +24,7 @@ class Emulator {
 
 	int8_t init();
 
-	void loadROM(const uint8_t* data);
+	void loadROM(const uint8_t* data, size_t size);
 
 	void cycle();
 

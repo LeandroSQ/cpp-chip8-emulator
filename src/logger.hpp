@@ -2,7 +2,7 @@
 #include <iostream>
 #include "util.hpp"
 
-#define VERBOSE
+// #define VERBOSE
 
 class Log {
   public:

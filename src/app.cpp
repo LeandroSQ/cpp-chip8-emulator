@@ -38,7 +38,7 @@ int8_t App::loadROM(const char* path) {
 	currentRom = getFileName(path);
 
 	// Load it into the emulator
-	emulator.loadROM(buffer);
+	emulator.loadROM(buffer, size);
 
 	// Free the buffer
 	delete[] buffer;

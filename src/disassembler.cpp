@@ -16,7 +16,8 @@ std::vector<Instruction> Disassembler::disassembleData(uint8_t* data, size_t siz
 	// Loop through the program
 	while (programCounter < size) {
 		// Fetch the opcode
-		uint16_t opcode = data[programCounter++] << 8 | data[programCounter++];
+		uint16_t opcode = data[programCounter] << 8 | data[programCounter + 1];
+        programCounter += sizeof(uint16_t);
 
 		// Decode possible arguments
 		const uint16_t nnn = opcode & 0x0FFF;

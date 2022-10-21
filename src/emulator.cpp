@@ -14,14 +14,14 @@ int8_t Emulator::init() {
 	return 0;
 }
 
-void Emulator::loadROM(const uint8_t* data) {
+void Emulator::loadROM(const uint8_t* data, size_t size) {
 	Log::info("[Emulator] Loading ROM...");
 
 	// Reset the emulator
 	reset();
 
 	// Load the ROM into memory
-	for (unsigned long i = 0; i < sizeof(data); i++) {
+	for (size_t i = 0; i < size; i++) {
 		memory.write(Memory::programStart + i, data[i]);
 	}
 }
