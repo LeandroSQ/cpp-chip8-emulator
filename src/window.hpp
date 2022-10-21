@@ -1,6 +1,8 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include "size.hpp"
+#include "input.hpp"
+#include <string>
 
 class Window {
   private:
@@ -10,12 +12,12 @@ class Window {
 	void* pixels = nullptr;
 	int pitch = 0;
 
-    uint8_t createWindow();
-    uint8_t createFrameBuffer();
+    int8_t createWindow();
+    int8_t createFrameBuffer();
 
   public:
     bool isClosed = false;
-    int pixelScale = 2;
+    int pixelScale = 10;
     Size viewport = { 64, 32 };
     Size logicalViewport = viewport * pixelScale;
 
@@ -23,13 +25,15 @@ class Window {
 
 	~Window();
 
-    uint8_t init ();
+    int8_t init ();
 
-    void pollEvents();
+    void pollEvents(Input& emulator);
 
 	void startFrame();
 
 	void endFrame();
+
+    void updateTitle(std::string title);
 
     uint8_t* getPixelsBuffer();
 

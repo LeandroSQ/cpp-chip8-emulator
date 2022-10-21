@@ -14,14 +14,8 @@ Window::~Window() {
 	SDL_Quit();
 }
 
-uint8_t Window::init() {
+int8_t Window::init() {
 	Log::info("[Window] Initializing...");
-
-	// Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_TIMER) < 0) {
-		Log::error("SDL could not initialize!");
-		return -1;
-	}
 
 	// Create the SDL window
 	if (createWindow() < 0) return -1;
@@ -32,7 +26,7 @@ uint8_t Window::init() {
 	return 0;
 }
 
-uint8_t Window::createWindow() {
+int8_t Window::createWindow() {
     Log::info("[Window] Creating window...");
 
 	// Create the window
@@ -60,12 +54,13 @@ uint8_t Window::createWindow() {
     SDL_RendererInfo rendererInfo;
 	SDL_GetRendererInfo(sdlRendererHandle, &rendererInfo);
     Log::info("[Window] SDL renderer backend: ", rendererInfo.name);
+    Log::info("[Window] Viewport scaling: ", pixelScale, "x");
 
 
 	return 0;
 }
 
-uint8_t Window::createFrameBuffer() {
+int8_t Window::createFrameBuffer() {
     Log::info("[Window] Allocating frame buffer...");
 
 	// Create the texture
@@ -81,13 +76,16 @@ uint8_t Window::createFrameBuffer() {
 	return 0;
 }
 
-void Window::pollEvents() {
+void Window::pollEvents(Input& input) {
     SDL_Event event;
     SDL_PollEvent(&event);
 
     if (event.type == SDL_QUIT) {
         Log::info("[Window] Window quit event received, exiting...");
         isClosed = true;
+    } else if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
+        Log::debug("[Window] Key event received, updating emulator state...");
+        input.update(event);
     }
 }
 
@@ -106,6 +104,10 @@ void Window::endFrame() {
 	SDL_RenderCopy(sdlRendererHandle, frameBuffer, nullptr, nullptr);
 	// Present the back buffer
 	SDL_RenderPresent(sdlRendererHandle);
+}
+
+void Window::updateTitle(std::string title) {
+    SDL_SetWindowTitle(sdlWindowHandle, title.c_str());
 }
 
 uint8_t* Window::getPixelsBuffer() {

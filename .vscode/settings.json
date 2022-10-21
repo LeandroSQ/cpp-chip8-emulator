@@ -66,6 +66,13 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "algorithm": "cpp",
-        "format": "cpp"
-    }
+        "format": "cpp",
+        "__availability": "cpp"
+    },
+    "cSpell.words": [
+        "ANNN",
+        "BNNN",
+        "CXNN",
+        "DXYN"
+    ]
 }
