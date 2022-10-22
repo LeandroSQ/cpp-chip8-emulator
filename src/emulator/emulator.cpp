@@ -1,5 +1,4 @@
 #include "emulator.hpp"
-#include <fstream>
 
 Emulator::Emulator() { }
 

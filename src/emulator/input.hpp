@@ -1,5 +1,6 @@
 #pragma once
-#include "settings.hpp"
+
+#include "../utils/settings.hpp"
 #include <SDL2/SDL.h>
 #include <cstdint>
 

@@ -1,7 +1,7 @@
 #include "cpu.hpp"
-#include "logger.hpp"
-#include "random.hpp"
-#include "util.hpp"
+#include "../utils/logger.hpp"
+#include "../utils/random.hpp"
+#include "../utils/util.hpp"
 
 CPU::CPU() { }
 

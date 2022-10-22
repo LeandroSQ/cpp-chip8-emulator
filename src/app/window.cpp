@@ -1,5 +1,5 @@
 #include "window.hpp"
-#include "logger.hpp"
+#include "../utils/logger.hpp"
 
 Window::Window() { }
 

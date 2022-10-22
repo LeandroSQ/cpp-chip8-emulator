@@ -1,5 +1,5 @@
 #include "input.hpp"
-#include "logger.hpp"
+#include "../utils/logger.hpp"
 
 Input::Input(Settings& settings) : settings(settings) { }
 

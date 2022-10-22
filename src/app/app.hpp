@@ -1,10 +1,10 @@
 #pragma once
 
 #include "clock.hpp"
-#include "emulator.hpp"
-#include "random.hpp"
-#include "renderer.hpp"
-#include "settings.hpp"
+#include "../emulator/emulator.hpp"
+#include "../utils/random.hpp"
+#include "../emulator/emulator.hpp"
+#include "../utils/settings.hpp"
 #include "window.hpp"
 #include <string>
 

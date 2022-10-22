@@ -1,6 +1,6 @@
 #include "disassembler.hpp"
-#include "logger.hpp"
-#include "util.hpp"
+#include "../utils/logger.hpp"
+#include "../utils/util.hpp"
 
 Instruction::Instruction(uint8_t opcode, uint16_t address, std::string name, std::string description)
 		: opcode(opcode), address(address), name(name), description(description) { }

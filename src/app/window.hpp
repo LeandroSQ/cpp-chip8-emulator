@@ -1,6 +1,7 @@
 #pragma once
-#include "input.hpp"
-#include "size.hpp"
+
+#include "../emulator/input.hpp"
+#include "../utils/size.hpp"
 #include <SDL2/SDL.h>
 #include <string>
 

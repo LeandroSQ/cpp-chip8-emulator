@@ -1,11 +1,12 @@
 #pragma once
+
 #include "audio.hpp"
 #include "cpu.hpp"
 #include "input.hpp"
-#include "logger.hpp"
+#include "../utils/logger.hpp"
 #include "memory.hpp"
 #include "renderer.hpp"
-#include "settings.hpp"
+#include "../utils/settings.hpp"
 
 class Emulator {
   public:

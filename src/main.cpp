@@ -1,8 +1,8 @@
-#include "app.hpp"
-#include "logger.hpp"
-#include "disassembler.hpp"
+#include "app/app.hpp"
+#include "utils/util.hpp"
+#include "utils/logger.hpp"
+#include "emulator/disassembler.hpp"
 #include <vector>
-#include "util.hpp"
 
 int main(int argc, char** argv) {
     Log::debug("[Main] Parsing arguments...");

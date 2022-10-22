@@ -1,6 +1,6 @@
 #include "app.hpp"
-#include "util.h"
-#include "logger.hpp"
+#include "../utils/util.hpp"
+#include "../utils/logger.hpp"
 #include <SDL2/SDL.h>
 
 App::App() { }

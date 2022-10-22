@@ -1,5 +1,5 @@
 #include "audio.hpp"
-#include "logger.hpp"
+#include "../utils/logger.hpp"
 
 constexpr int AMPLITUDE = 28000;
 constexpr int SAMPLE_RATE = 44100;

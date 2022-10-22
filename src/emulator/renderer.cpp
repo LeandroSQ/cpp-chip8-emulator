@@ -1,7 +1,5 @@
 #include "renderer.hpp"
-#include "../bindings/imgui_impl_sdl.h"
-#include "../bindings/imgui_impl_sdlrenderer.h"
-#include "logger.hpp"
+#include "../utils/logger.hpp"
 #include <SDL2/SDL.h>
 
 Renderer::Renderer(Settings& settings) : settings(settings) { }

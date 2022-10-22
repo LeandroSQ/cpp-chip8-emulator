@@ -1,5 +1,6 @@
 #pragma once
-#include "window.hpp"
+
+#include "../app/window.hpp"
 
 class Renderer {
   public:

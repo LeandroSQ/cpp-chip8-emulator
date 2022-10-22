@@ -1,7 +1,7 @@
 #include "gui.hpp"
-#include "../bindings/imgui_impl_sdl.h"
-#include "../bindings/imgui_impl_sdlrenderer.h"
-#include "logger.hpp"
+#include "../../bindings/imgui_impl_sdl.h"
+#include "../../bindings/imgui_impl_sdlrenderer.h"
+#include "../utils/logger.hpp"
 
 GUI::GUI(Window& window) : window(window) { }
 

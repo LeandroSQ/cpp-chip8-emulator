@@ -23,7 +23,7 @@ project(${PROJECT_NAME})
 
 # Use wildcard to include all source files under /src
 # Can also use GLOB_RECURSE
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.hpp")
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()

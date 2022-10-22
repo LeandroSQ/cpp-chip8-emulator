@@ -1,6 +1,6 @@
 #include "memory.hpp"
-#include "logger.hpp"
-#include "util.hpp"
+#include "../utils/logger.hpp"
+#include "../utils/util.hpp"
 #include <stdexcept>
 
 Memory::Memory() { }
