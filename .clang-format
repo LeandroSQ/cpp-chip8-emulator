@@ -25,6 +25,7 @@ SpaceInEmptyBlock: true
 KeepEmptyLinesAtTheStartOfBlocks: false
 PackConstructorInitializers: NextLine
 BreakConstructorInitializers: BeforeColon
+NamespaceIndentation: All
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterEnum: false

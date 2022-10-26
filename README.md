@@ -8,6 +8,11 @@ Yet another [CHIP8](https://en.wikipedia.org/wiki/CHIP-8) emulator/interpreter. 
     <img src=".github/ufo.png" height="200px">
 </p>
 
+## Graphical User Interface
+<p align="center">
+    <img src=".github/invaders.gif">
+</p>
+
 ## How to run
 ### Linux/Mac
 1. Install [Conan](https://conan.io/)
@@ -33,9 +38,9 @@ The emulator provides a disassembler, which can be accessed by passing `--disass
     <img src=".github/disassembler.png">
 </p>
 
-### Verbose mode
+### LOG_VERBOSE mode
 
-You can `#define VERBOSE` for extra debug information.
+You can `#define LOG_VERBOSE` for extra debug information.
 Which includes all the opcodes, their arguments and an explanation of what they do in real time, performance impact is negligible.
 <p align="center">
     <img src=".github/debug.png">
@@ -113,15 +118,15 @@ This emulator uses [SDL2](https://www.libsdl.org/) for audio. Generating a sine 
 
 For when I have spare time:
 - [x] Disassembler
-- [ ] Create a Graphical User Interface using Dear ImGui
+- [x] Create a Graphical User Interface using Dear ImGui
   - [ ] Load ROM files within the GUI
-  - [ ] Implement a register view within the GUI
-  - [ ] Implement a stack view within the GUI
-  - [ ] Implement a dissasembler view within the GUI
-  - [ ] Implement a memory view within the GUI
+  - [x] Implement a register view within the GUI
+  - [x] Implement a stack view within the GUI
+  - [x] Implement a dissasembler view within the GUI
+  - [x] Implement a memory view within the GUI
   - [ ] Implement a keypad view within the GUI
-  - [ ] Implement a screen view within the GUI
-  - [ ] Implement a debug view within the GUI
+  - [x] Implement a screen view within the GUI
+  - [x] Implement a debug view within the GUI
   - [ ] Implement a settings view within the GUI
     - [ ] Define a CLOCK hz
     - [ ] Define a Frame Rate hz

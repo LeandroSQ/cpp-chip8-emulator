@@ -1,5 +1,6 @@
 {
     "cmake.configureOnOpen": true,
+    "cmake.buildDirectory": "${workspaceFolder}/build",
     "explorer.sortOrder": "foldersNestsFiles",
     "workbench.colorTheme": "One Monokai",
     "files.associations": {
@@ -71,7 +72,8 @@
         "deque": "cpp",
         "fstream": "cpp",
         "iomanip": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "filesystem": "cpp"
     },
     "cSpell.words": [
         "ANNN",

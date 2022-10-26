@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
 class Random {
   public:
 	static void init();

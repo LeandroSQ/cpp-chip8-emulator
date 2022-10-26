@@ -52,7 +52,7 @@ void Memory::loadFontset() {
 uint8_t Memory::read(uint16_t address) {
 	if (address >= sizeof(data)) {
 		Log::error("[Memory] Address out of bounds: 0x", toHex(address, 4));
-		throw std::runtime_error("Memory::read: Address out of bounds");
+		// throw std::runtime_error("Memory::read: Address out of bounds");
 
 		return 0x00;
 	} else {
@@ -63,7 +63,7 @@ uint8_t Memory::read(uint16_t address) {
 void Memory::write(uint16_t address, uint8_t value) {
 	if (address >= sizeof(data)) {
 		Log::error("[Memory] Address out of bounds: 0x", toHex(address, 4));
-		throw std::runtime_error("Memory::read: Address out of bounds");
+		// throw std::runtime_error("Memory::read: Address out of bounds");
 
 		return;
 	}
@@ -74,7 +74,7 @@ void Memory::write(uint16_t address, uint8_t value) {
 void Memory::write(uint16_t address, uint8_t* value) {
 	if (address >= sizeof(data)) {
 		Log::error("[Memory] Address out of bounds: 0x", toHex(address, 4));
-		throw std::runtime_error("Memory::read: Address out of bounds");
+		// throw std::runtime_error("Memory::read: Address out of bounds");
 
 		return;
 	}

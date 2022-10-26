@@ -13,11 +13,10 @@ struct Instruction {
 };
 
 class Disassembler {
-  private:
+  public:
     static std::vector<Instruction> disassembleData(uint8_t* data, size_t size);
 
-  public:
-    static std::vector<Instruction> disassemble(const char* filename);
+    static std::vector<Instruction> disassembleFile(const char* filename);
 
     static void print(std::vector<Instruction> instructions);
 };

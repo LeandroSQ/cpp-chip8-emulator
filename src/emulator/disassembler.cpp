@@ -206,7 +206,7 @@ std::vector<Instruction> Disassembler::disassembleData(uint8_t* data, size_t siz
     return buffer;
 }
 
-std::vector<Instruction> Disassembler::disassemble(const char* filename) {
+std::vector<Instruction> Disassembler::disassembleFile(const char* filename) {
 	// Read the binary file content
     uint8_t* data;
     size_t size;

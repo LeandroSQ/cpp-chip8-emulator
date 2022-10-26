@@ -1,4 +1,5 @@
 #include "random.hpp"
+
 #include "logger.hpp"
 #include <iostream>
 

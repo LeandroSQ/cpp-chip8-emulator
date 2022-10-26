@@ -1,33 +1,46 @@
 #pragma once
 
-#include "clock.hpp"
 #include "../emulator/emulator.hpp"
-#include "../utils/random.hpp"
-#include "../emulator/emulator.hpp"
+#include "../gui/gui.hpp"
 #include "../utils/settings.hpp"
+#include "../emulator/disassembler.hpp"
+#include "clock.hpp"
 #include "window.hpp"
 #include <string>
+#include <vector>
 
 class App {
-  private:
+  public:
 	// Declare variables
 	Settings settings;
 	Window window;
 	Emulator emulator;
 
-	// Misc
+    double deltaTime = 0.0;
+	uint16_t fps = 0;
+	uint16_t cycles = 0;
+	double maxFrameTime = 0;
+
+    // Misc
 	bool isRunning = false;
 	std::string currentRom;
+    std::vector<Instruction> disassembledData;
+
+  private:
+	// GUI
+	GUI gui = GUI(*this);
 
 	// FPS Variables
-	double deltaTime = 0.0;
+	uint32_t lastMaxFrameTime = 0;
 	Clock fpsClock = Clock(1.0, [&]() { // Once per second
-		window.updateTitle(
-			"Chip8 Emulator " + currentRom + " | FPS: " + std::to_string(frameClock.count) +
-			" | Cycles: " + std::to_string(cpuClock.count) + "/s"
-		);
+		fps = frameClock.count;
+		cycles = cpuClock.count;
+        maxFrameTime = lastMaxFrameTime;
+		lastMaxFrameTime = 0;
+
 		cpuClock.count = 0;
 		frameClock.count = 0;
+		cpuTimerClock.count = 0;
 	});
 
 	// Frame clock
@@ -35,6 +48,8 @@ class App {
 		window.startFrame();
 		emulator.renderer.render(window);
 		window.endFrame();
+		gui.render();
+		window.showFrame();
 	});
 
 	// CPU clock
@@ -57,4 +72,7 @@ class App {
 	int8_t loadROM(const char* path);
 
 	void run();
+
+  private:
+	void handleEvents();
 };

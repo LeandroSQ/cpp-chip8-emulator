@@ -28,14 +28,13 @@ int8_t Window::createWindow() {
 	Log::info("[Window] Creating window...");
 
 	// Create the window
-	sdlWindowHandle = SDL_CreateWindow(
-		"Chip8 Emulator",
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
-		logicalViewport.width,
-		logicalViewport.height,
-		SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
-	);
+	int flags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED;
+
+#ifdef ENABLE_HIGHDPI
+	flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+#endif
+
+	sdlWindowHandle = SDL_CreateWindow("Chip8 Emulator", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, logicalViewport.width, logicalViewport.height, flags);
 	if (sdlWindowHandle == nullptr) {
 		Log::error("SDL could not create window!");
 		return -1;
@@ -77,19 +76,6 @@ int8_t Window::createFrameBuffer() {
 	return 0;
 }
 
-void Window::pollEvents(Input& input) {
-	SDL_Event event;
-	SDL_PollEvent(&event);
-
-	if (event.type == SDL_QUIT) {
-		Log::info("[Window] Window quit event received, exiting...");
-		isClosed = true;
-	} else if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
-		Log::debug("[Window] Key event received, updating emulator state...");
-		input.update(event);
-	}
-}
-
 void Window::startFrame() {
 	// Lock the texture and acquire the pixel data
 	SDL_LockTexture(frameBuffer, nullptr, &pixels, &pitch);
@@ -101,8 +87,9 @@ void Window::endFrame() {
 
 	// Clear the back buffer
 	SDL_RenderClear(sdlRendererHandle);
-	// Copy the texture into the back buffer
-	SDL_RenderCopy(sdlRendererHandle, frameBuffer, nullptr, nullptr);
+}
+
+void Window::showFrame() {
 	// Present the back buffer
 	SDL_RenderPresent(sdlRendererHandle);
 }

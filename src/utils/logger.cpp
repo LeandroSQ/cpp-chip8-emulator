@@ -9,3 +9,5 @@ const char* Log::COLOR_YELLOW = "\u001b[33m";
 const char* Log::RESET = "\u001b[0m";
 const char* Log::STYLE_BOLD = "\u001b[1m";
 const char* Log::STYLE_UNDERLINE = "\u001b[4m";
+
+std::string Log::buffer = "";

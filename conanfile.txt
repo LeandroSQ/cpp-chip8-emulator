@@ -1,6 +1,7 @@
 [requires]
 sdl/2.24.0
 imgui/cci.20220621+1.88.docking
+implot/0.14
 
 [generators]
 cmake

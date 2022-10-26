@@ -5,6 +5,9 @@
 #include <vector>
 
 int main(int argc, char** argv) {
+    // Disable cout sync
+    std::ios_base::sync_with_stdio(false);
+
     Log::debug("[Main] Parsing arguments...");
 	Log::debug("[Main] Argc: ", argc);
 	for (int i = 0; i < argc; i++) {
@@ -19,7 +22,7 @@ int main(int argc, char** argv) {
     if (argc == 3 && std::string(argv[1]) == "--disassemble") {
         Log::debug("[Main] Disassembling ROM...");
 
-        std::vector<Instruction> instructions = Disassembler::disassemble(argv[2]);
+        std::vector<Instruction> instructions = Disassembler::disassembleFile(argv[2]);
         Disassembler::print(instructions);
     } else {
         App app;

@@ -5,11 +5,10 @@
 #include <SDL2/SDL.h>
 #include <string>
 
+#define ENABLE_HIGHDPI
+
 class Window {
   private:
-	SDL_Window* sdlWindowHandle = nullptr;
-	SDL_Renderer* sdlRendererHandle = nullptr;
-	SDL_Texture* frameBuffer = nullptr;
 	void* pixels = nullptr;
 	int pitch = 0;
 
@@ -17,6 +16,10 @@ class Window {
 	int8_t createFrameBuffer();
 
   public:
+	SDL_Texture* frameBuffer = nullptr;
+    SDL_Window* sdlWindowHandle = nullptr;
+	SDL_Renderer* sdlRendererHandle = nullptr;
+
 	bool isClosed = false;
 	int pixelScale = 10;
 	Size viewport = { 64, 32 };
@@ -28,11 +31,11 @@ class Window {
 
 	int8_t init();
 
-	void pollEvents(Input& emulator);
-
 	void startFrame();
 
 	void endFrame();
+
+    void showFrame();
 
 	void updateTitle(std::string title);
 

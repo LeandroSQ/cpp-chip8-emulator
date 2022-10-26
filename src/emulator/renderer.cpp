@@ -19,6 +19,10 @@ void Renderer::render(Window& window) {
 			if (!settings.isFrameInterpolationEnabled) bufferColor = currentColor;
 			else if (currentColor == 0xFF) bufferColor = 0xFF;
 
+            if (settings.isFrameInterpolationEnabled && y == 0 && x == 0) {
+                setPixel(window, pixels, x, y, 0xAA);
+            } else
+
 			setPixel(window, pixels, x, y, bufferColor);
 
 			if (settings.isFrameInterpolationEnabled && currentColor != 0xFF) {

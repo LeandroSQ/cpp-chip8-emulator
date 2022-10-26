@@ -31,16 +31,16 @@ conan_basic_setup()
 set(BINDINGS
     ${CMAKE_CURRENT_SOURCE_DIR}/bindings/imgui_impl_sdl.h
     ${CMAKE_CURRENT_SOURCE_DIR}/bindings/imgui_impl_sdl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bindings/imgui_impl_sdlrenderer.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bindings/imgui_impl_sdlrenderer.cpp
 )
 add_executable(${PROJECT_NAME} ${SOURCES} ${BINDINGS})
+
+# Adds the precompiled header iostream to the target
+target_precompile_headers(${PROJECT_NAME} PUBLIC <iostream> <cstdint> <functional> <string> <vector> <sstream> <fstream> <filesystem> <SDL2/SDL.h> <imgui.h> "bindings/imgui_impl_sdl.h" <implot.h> <implot_internal.h>)
 target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    CXX_STANDARD 17
+    CXX_STANDARD 20
     CXX_EXTENSIONS OFF
 )
-
 
 # Copies the ROMs to the build directory
 file(COPY roms DESTINATION ${CMAKE_BINARY_DIR}/bin)

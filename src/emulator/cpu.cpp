@@ -18,7 +18,6 @@ void dumpRegisters(uint8_t* registers, uint16_t indexRegister, uint8_t stackPoin
 }
 
 void CPU::execute(uint16_t opcode, Memory& memory, Input& input, Renderer& renderer) {
-	// TODO: Move this to each instruction
 	const uint16_t nnn = opcode & 0x0FFF;
 	const uint16_t nn = opcode & 0x00FF;
 	const uint8_t n = opcode & 0x000F;
