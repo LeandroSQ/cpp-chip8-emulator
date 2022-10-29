@@ -1,7 +1,6 @@
 #include "memory.hpp"
 #include "../utils/logger.hpp"
 #include "../utils/util.hpp"
-#include <stdexcept>
 
 Memory::Memory() { }
 
@@ -40,7 +39,7 @@ void Memory::loadFontset() {
 		{ 0xF0, 0x80, 0xF0, 0x80, 0x80 }  /* F character */
 	};
 
-	// The fontset is loaded into memory starting at address 0x50, should be under 0x200
+	// The font set is loaded into memory starting at address 0x50, should be under 0x200
 	// Therefore residing within the reserved memory
 	for (uint8_t character = 0; character < charCount; character++) {
 		for (uint8_t byte = 0; byte < charSize; byte++) {
@@ -52,8 +51,6 @@ void Memory::loadFontset() {
 uint8_t Memory::read(uint16_t address) {
 	if (address >= sizeof(data)) {
 		Log::error("[Memory] Address out of bounds: 0x", toHex(address, 4));
-		// throw std::runtime_error("Memory::read: Address out of bounds");
-
 		return 0x00;
 	} else {
 		return data[address];
@@ -63,8 +60,6 @@ uint8_t Memory::read(uint16_t address) {
 void Memory::write(uint16_t address, uint8_t value) {
 	if (address >= sizeof(data)) {
 		Log::error("[Memory] Address out of bounds: 0x", toHex(address, 4));
-		// throw std::runtime_error("Memory::read: Address out of bounds");
-
 		return;
 	}
 
@@ -74,8 +69,6 @@ void Memory::write(uint16_t address, uint8_t value) {
 void Memory::write(uint16_t address, uint8_t* value) {
 	if (address >= sizeof(data)) {
 		Log::error("[Memory] Address out of bounds: 0x", toHex(address, 4));
-		// throw std::runtime_error("Memory::read: Address out of bounds");
-
 		return;
 	}
 

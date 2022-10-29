@@ -18,6 +18,8 @@ class Input {
 
 	void reset();
 
+    void setKey(uint8_t key, bool value);
+
 	bool isKeyDown(uint8_t key);
 
 	bool isKeyUp(uint8_t key);

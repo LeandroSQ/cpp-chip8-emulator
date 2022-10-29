@@ -1,6 +1,7 @@
 #include "cpu.hpp"
 
 #include <imgui.h>
+#include "../utils/util.hpp"
 
 inline void input(char* label, uint8_t* value) {
     ImGui::InputScalar(label, ImGuiDataType_U8, value, NULL, NULL, "%02X", ImGuiInputTextFlags_CharsHexadecimal | ImGuiInputTextFlags_NoUndoRedo);
@@ -16,12 +17,10 @@ inline void renderCPURegisters(Emulator& emulator) {
     char label[6];
 
     // Draw centered text
-    ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("CPU Registers").x) / 2.0f);
-    ImGui::Text("CPU Registers");
+    ImGui::TextCentered("CPU Registers");
 
     // Define the Input width
     ImGui::PushItemWidth(22.5f);
-    float cursorX = 0.0f;
 
     // Padding
     ImGui::Separator();
@@ -86,8 +85,7 @@ inline void renderCPUStack(Emulator& emulator) {
     // Draw centered text
     ImGui::NewLine();
     ImGui::NewLine();
-    ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("CPU Stack").x) / 2.0f);
-    ImGui::Text("CPU Stack");
+    ImGui::TextCentered("CPU Stack");
     // Padding
     ImGui::Separator();
     ImGui::NewLine();

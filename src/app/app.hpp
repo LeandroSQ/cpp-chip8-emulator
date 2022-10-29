@@ -14,7 +14,7 @@ class App {
 	// Declare variables
 	Settings settings;
 	Window window;
-	Emulator emulator;
+	Emulator emulator = Emulator(settings);
 
     double deltaTime = 0.0;
 	uint16_t fps = 0;

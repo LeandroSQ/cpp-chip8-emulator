@@ -10,7 +10,7 @@
 
 class Emulator {
   public:
-	Settings settings;
+	Settings& settings;
 	CPU cpu;
 	Memory memory;
 	Input input = Input(settings);
@@ -19,7 +19,7 @@ class Emulator {
 
 	bool isHalted = false;
 
-	Emulator();
+	Emulator(Settings& settings);
 
 	~Emulator();
 

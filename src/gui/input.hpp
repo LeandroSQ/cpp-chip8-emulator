@@ -4,6 +4,6 @@
 
 namespace UI {
 
-	void renderOverlay(App& app);
+    void renderInput(App& app);
 
 };

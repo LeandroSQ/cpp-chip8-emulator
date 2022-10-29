@@ -6,7 +6,7 @@
 struct Instruction {
 	uint8_t opcode;
 	uint16_t address;
-	std::string name;
+	std::string mnemonic;
 	std::string description;
 
 	Instruction(uint8_t opcode, uint16_t address, std::string name, std::string description);

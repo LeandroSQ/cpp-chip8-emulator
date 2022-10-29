@@ -1,6 +1,6 @@
 #include "emulator.hpp"
 
-Emulator::Emulator() { }
+Emulator::Emulator(Settings& settings): settings(settings) { }
 
 Emulator::~Emulator() { }
 

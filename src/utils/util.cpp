@@ -30,7 +30,7 @@ int8_t readFile(const char* path, uint8_t*& buffer, size_t& size) {
 	// Get file size
 	std::streamsize fileSize = file.tellg();
 	file.seekg(0, std::ios::beg);
-	Log::info("[IO] File size: ", fileSize, " bytes");
+	Log::info("[IO] File size: ", (int) fileSize, " bytes");
     size = fileSize;
 
 	// Allocate memory for the data
@@ -53,3 +53,11 @@ int8_t readFile(const char* path, uint8_t*& buffer, size_t& size) {
 std::string getFileName(const char* path) {
     return std::filesystem::path(path).stem();
 }
+
+DISABLE_WARNING_PUSH
+DISABLE_WARNING_FORMAT_SECURITY
+void ImGui::TextCentered(const char* fmt, ...) {
+    ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize(fmt).x) / 2.0f + ImGui::GetStyle().ItemSpacing.x);
+    ImGui::Text(fmt);
+}
+DISABLE_WARNING_POP

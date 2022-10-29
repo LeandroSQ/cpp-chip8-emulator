@@ -73,7 +73,9 @@
         "fstream": "cpp",
         "iomanip": "cpp",
         "stack": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "memory_resource": "cpp",
+        "version": "cpp"
     },
     "cSpell.words": [
         "ANNN",

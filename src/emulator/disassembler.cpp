@@ -3,9 +3,10 @@
 #include "../utils/util.hpp"
 
 Instruction::Instruction(uint8_t opcode, uint16_t address, std::string name, std::string description)
-		: opcode(opcode), address(address), name(name), description(description) { }
+		: opcode(opcode), address(address), mnemonic(name), description(description) { }
 
 inline void handleUnkownOpcode(std::vector<Instruction>& buffer, uint16_t opcode, uint16_t address) {
+    Log::debug("[Disassembler] Unknown opcode: 0x", toHex(opcode, 4));
     buffer.emplace_back(opcode, address, "_" + toHex(address, 4) + " dw 0x" + toHex(opcode, 4), "Unknown opcode, treating as data");
 }
 
@@ -38,7 +39,6 @@ std::vector<Instruction> Disassembler::disassembleData(uint8_t* data, size_t siz
 						buffer.emplace_back(opcode, programCounter, "RET", "Return from a subroutine");
 						break;
 					default:
-						Log::warn("[Disassembler] Unknown opcode: 0x", toHex(opcode, 4));
                         handleUnkownOpcode(buffer, opcode, programCounter);
 						break;
 				}
@@ -110,7 +110,6 @@ std::vector<Instruction> Disassembler::disassembleData(uint8_t* data, size_t siz
                         buffer.emplace_back(opcode, programCounter, "SHL V" + toHex(x, 1), "Set V" + toHex(x, 1) + " = V" + toHex(x, 1) + " << 1");
 						break;
 					default:
-						Log::warn("[Disassembler] Unknown opcode: 0x", toHex(opcode, 4));
                         handleUnkownOpcode(buffer, opcode, programCounter);
 						break;
 				}
@@ -146,7 +145,6 @@ std::vector<Instruction> Disassembler::disassembleData(uint8_t* data, size_t siz
                         buffer.emplace_back(opcode, programCounter, "SKNP V" + toHex(x, 1), "Skip next instruction if key with the value of V" + toHex(x, 1) + " is not pressed");
 						break;
 					default:
-						Log::warn("[Disassembler] Unknown opcode: 0x", toHex(opcode, 4));
                         handleUnkownOpcode(buffer, opcode, programCounter);
 						break;
 				}
@@ -190,14 +188,12 @@ std::vector<Instruction> Disassembler::disassembleData(uint8_t* data, size_t siz
                         buffer.emplace_back(opcode, programCounter, "LD V" + toHex(x, 1) + ", [I]", "Read registers V0 through V" + toHex(x, 1) + " from memory starting at location I");
 						break;
 					default:
-						Log::warn("[Disassembler] Unknown opcode: 0x", toHex(opcode, 4));
                         handleUnkownOpcode(buffer, opcode, programCounter);
 						break;
 				}
 				break;
 
 			default:
-				Log::warn("[Disassembler] Unknown opcode: 0x", toHex(opcode, 4));
                 handleUnkownOpcode(buffer, opcode, programCounter);
 				break;
 		}
@@ -230,7 +226,7 @@ void Disassembler::print(std::vector<Instruction> instructions) {
     for (auto i = instructions.begin(); i != instructions.end(); i++) {
         std::cout << Log::STYLE_BOLD << Log::STYLE_UNDERLINE << toHex(i->address, 4)
                   << Log::RESET << Log::COLOR_BLUE << " [" << toHex(i->opcode, 4) << "] "
-                  << Log::RESET << Log::COLOR_MAGENTA << i->name
+                  << Log::RESET << Log::COLOR_MAGENTA << i->mnemonic
                   << Log::RESET << Log::COLOR_GRAY << " ; " << i->description << Log::RESET << std::endl;
     }
 }

@@ -13,9 +13,10 @@
 
 #include "cpu.hpp"
 #include "log.hpp"
-#include "memory.hpp"
 #include "debug.hpp"
 #include "style.hpp"
+#include "input.hpp"
+#include "memory.hpp"
 #include "viewport.hpp"
 #include "dissasembler.hpp"
 
@@ -72,7 +73,7 @@ void GUI::render() {
 	ImGui_ImplSDLRenderer_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::DockSpaceOverViewport();
+	ImGui::DockSpaceOverViewport(NULL, ImGuiDockNodeFlags_NoWindowMenuButton | ImGuiDockNodeFlags_NoCloseButton);
 
     // Render children
 	UI::renderViewport(app.window);
@@ -80,6 +81,7 @@ void GUI::render() {
 	UI::renderMemory(app.emulator);
     UI::renderOverlay(app);
     UI::renderDisassembler(app);
+    UI::renderInput(app);
 #ifdef ENABLE_LOG_BUFFER
 	UI::renderLog();
 #endif

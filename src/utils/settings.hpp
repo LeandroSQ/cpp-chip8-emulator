@@ -11,5 +11,5 @@ struct Settings {
 	// Graphics
 	uint32_t backgroundColor = 0x000000;
 	uint32_t foregroundColor = 0xFFFFFF;
-	bool isFrameInterpolationEnabled = false;
+	bool isFrameInterpolationEnabled = true;
 };

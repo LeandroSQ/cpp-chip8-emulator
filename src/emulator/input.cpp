@@ -1,4 +1,5 @@
 #include "input.hpp"
+
 #include "../utils/logger.hpp"
 
 Input::Input(Settings& settings) : settings(settings) { }
@@ -125,6 +126,10 @@ bool Input::isKeyDown(uint8_t key) {
 
 bool Input::isKeyUp(uint8_t key) {
 	return !keys[key];
+}
+
+void Input::setKey(uint8_t key, bool isDown) {
+    keys[key] = isDown;
 }
 
 uint8_t Input::getFirstKeyDownIndex() {

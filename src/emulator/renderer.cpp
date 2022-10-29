@@ -2,7 +2,7 @@
 #include "../utils/logger.hpp"
 #include <SDL2/SDL.h>
 
-Renderer::Renderer(Settings& settings) : settings(settings) { }
+Renderer::Renderer(Settings& settings) : settings(settings) {}
 
 Renderer::~Renderer() { }
 
@@ -18,10 +18,6 @@ void Renderer::render(Window& window) {
 
 			if (!settings.isFrameInterpolationEnabled) bufferColor = currentColor;
 			else if (currentColor == 0xFF) bufferColor = 0xFF;
-
-            if (settings.isFrameInterpolationEnabled && y == 0 && x == 0) {
-                setPixel(window, pixels, x, y, 0xAA);
-            } else
 
 			setPixel(window, pixels, x, y, bufferColor);
 

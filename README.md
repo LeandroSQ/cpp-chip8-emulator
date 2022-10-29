@@ -124,7 +124,7 @@ For when I have spare time:
   - [x] Implement a stack view within the GUI
   - [x] Implement a dissasembler view within the GUI
   - [x] Implement a memory view within the GUI
-  - [ ] Implement a keypad view within the GUI
+  - [x] Implement a keypad view within the GUI
   - [x] Implement a screen view within the GUI
   - [x] Implement a debug view within the GUI
   - [ ] Implement a settings view within the GUI
