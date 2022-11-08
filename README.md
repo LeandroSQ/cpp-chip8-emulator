@@ -127,12 +127,12 @@ For when I have spare time:
   - [x] Implement a keypad view within the GUI
   - [x] Implement a screen view within the GUI
   - [x] Implement a debug view within the GUI
-  - [ ] Implement a settings view within the GUI
-    - [ ] Define a CLOCK hz
-    - [ ] Define a Frame Rate hz
+  - [x] Implement a settings view within the GUI
+    - [x] Define a CLOCK hz
+    - [x] Define a Frame Rate hz
     - [ ] Define the screen size
     - [ ] Define the screen scale
-    - [ ] Define the screen color
+    - [x] Define the screen color
     - [ ] Define the audio frequency
 
 ## References
