@@ -56,8 +56,31 @@ int8_t readFile(const char* path, uint8_t*& buffer, size_t& size);
  */
 std::string getFileName(const char* path);
 
+/**
+ * @brief Extract the color channels from a 32-bit color
+ *
+ * @param color The color to extract the channels from
+ * @return uint8_t* An array of 4 elements, containing the color channels R G B A
+ */
+uint8_t* extractColorChannels(uint32_t color);
+float* extractColorChannelsF(uint32_t color);
+
+/**
+ * @brief Combine the color channels into a 32-bit color
+ *
+ * @param r The red channel
+ * @param g The green channel
+ * @param b The blue channel
+ * @param a The alpha channel
+ * @return uint32_t The combined color
+ */
+uint32_t combineColorChannels(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+uint32_t combineColorChannelsF(float r, float g, float b, float a);
+
 namespace ImGui {
     void TextCentered(const char* fmt, ...);
+
+    void ColorButtonPicker(const char* label, uint32_t& ref);
 }
 
 #if defined(_MSC_VER)

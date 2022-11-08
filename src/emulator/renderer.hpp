@@ -26,5 +26,5 @@ class Renderer {
 	uint8_t videoBuffer[Renderer::width * Renderer::height] = { 0 };
 	uint8_t lastFrameBuffer[Renderer::width * Renderer::height] = { 0 };
 
-	void setPixel(const Window& window, uint8_t* pixels, uint16_t x, uint16_t y, uint8_t color);
+	void setPixel(const Window& window, uint8_t* pixels, uint16_t x, uint16_t y, uint8_t colorR, uint8_t colorG, uint8_t colorB, uint8_t colorA);
 };

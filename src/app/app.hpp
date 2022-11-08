@@ -32,7 +32,7 @@ class App {
 
 	// FPS Variables
 	uint32_t lastMaxFrameTime = 0;
-	Clock fpsClock = Clock(1.0, [&]() { // Once per second
+	Clock fpsClock = Clock([&]() { // Once per second
 		fps = frameClock.count;
 		cycles = cpuClock.count;
         maxFrameTime = lastMaxFrameTime;
@@ -44,7 +44,7 @@ class App {
 	});
 
 	// Frame clock
-	Clock frameClock = Clock(1.0 / settings.frameRate, [&]() { // Once per frame
+	Clock frameClock = Clock(&settings.frameRate, [&]() { // Once per frame
 		window.startFrame();
 		emulator.renderer.render(window);
 		window.endFrame();
@@ -53,12 +53,12 @@ class App {
 	});
 
 	// CPU clock
-	Clock cpuClock = Clock(1.0 / settings.cpuClockSpeed, [&]() { // Once per CPU cycle
+	Clock cpuClock = Clock(&settings.cpuClockSpeed, [&]() { // Once per CPU cycle
 		emulator.cycle();
 	});
 
 	// CPU timer clock
-	Clock cpuTimerClock = Clock(1.0 / settings.timerClockSpeed, [&]() { // Once per CPU timer cycle
+	Clock cpuTimerClock = Clock(&settings.timerClockSpeed, [&]() { // Once per CPU timer cycle
 		emulator.updateTimers();
 	});
 

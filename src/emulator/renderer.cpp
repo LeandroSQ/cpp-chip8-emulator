@@ -1,5 +1,6 @@
 #include "renderer.hpp"
 #include "../utils/logger.hpp"
+#include "../utils/util.hpp"
 #include <SDL2/SDL.h>
 
 Renderer::Renderer(Settings& settings) : settings(settings) {}
@@ -8,32 +9,39 @@ Renderer::~Renderer() { }
 
 void Renderer::render(Window& window) {
 	uint8_t* pixels = window.getPixelsBuffer();
+    uint8_t* foreground = extractColorChannels(settings.foregroundColor);
+    uint8_t* background = extractColorChannels(settings.backgroundColor);
 
-	// Copy the video buffer to the frame buffer texture
-	for (uint8_t y = 0; y < window.viewport.height; y++) {
+    // Copy the video buffer to the frame buffer texture
+    for (uint8_t y = 0; y < window.viewport.height; y++) {
 		for (uint8_t x = 0; x < window.viewport.width; x++) {
 			uint16_t index = (y * window.viewport.width) + x;
-			uint8_t currentColor = videoBuffer[index];
-			uint8_t& bufferColor = lastFrameBuffer[index];
+            uint8_t& rawPixel = videoBuffer[index];
+			uint8_t& bufferedPixel = lastFrameBuffer[index];
 
-			if (!settings.isFrameInterpolationEnabled) bufferColor = currentColor;
-			else if (currentColor == 0xFF) bufferColor = 0xFF;
+            // If interpolation is enabled copy to the frame buffer
+            if (!settings.isFrameInterpolationEnabled) bufferedPixel = rawPixel;
+            else if (rawPixel == 0xFF) bufferedPixel = 0xFF;
 
-			setPixel(window, pixels, x, y, bufferColor);
+            // Extract the color channels and apply it to the screen
+            uint8_t* channels = bufferedPixel != 0x00 ? foreground : background;
+            setPixel(window, pixels, x, y, channels[0], channels[1], channels[2], bufferedPixel);
 
-			if (settings.isFrameInterpolationEnabled && currentColor != 0xFF) {
-				constexpr uint8_t step = 0x80;
-				if (bufferColor > step) {
-					bufferColor -= step;
-				} else {
-					bufferColor = 0;
-				}
-			}
-		}
-	}
+            // Fade the pixel if it's not 0xFF
+            if (settings.isFrameInterpolationEnabled && rawPixel != 0xFF) {
+                if (bufferedPixel > settings.frameInterpolationDecay)
+                    bufferedPixel -= settings.frameInterpolationDecay;
+                else
+                    bufferedPixel = 0x00;
+            }
+        }
+    }
+
+    delete[] foreground;
+    delete[] background;
 }
 
-void Renderer::setPixel(const Window& window, uint8_t* pixels, uint16_t x, uint16_t y, uint8_t color) {
+void Renderer::setPixel(const Window& window, uint8_t* pixels, uint16_t x, uint16_t y, uint8_t colorR, uint8_t colorG, uint8_t colorB, uint8_t colorA) {
 	for (int scaleX = 0; scaleX < window.pixelScale; scaleX++) {
 		for (int scaleY = 0; scaleY < window.pixelScale; scaleY++) {
 			int realX = x * window.pixelScale + scaleX;
@@ -42,16 +50,16 @@ void Renderer::setPixel(const Window& window, uint8_t* pixels, uint16_t x, uint1
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 			// ARGB
-			pixels[totalOffset + 0] = 0xFF;
-			pixels[totalOffset + 1] = color;
-			pixels[totalOffset + 2] = color;
-			pixels[totalOffset + 3] = color;
+			pixels[totalOffset + 0] = colorA;
+			pixels[totalOffset + 1] = colorR;
+			pixels[totalOffset + 2] = colorG;
+			pixels[totalOffset + 3] = colorB;
 #else
 			// BGRA
-			pixels[totalOffset + 0] = color;
-			pixels[totalOffset + 1] = color;
-			pixels[totalOffset + 2] = color;
-			pixels[totalOffset + 3] = 0xFF;
+			pixels[totalOffset + 0] = colorB;
+			pixels[totalOffset + 1] = colorG;
+			pixels[totalOffset + 2] = colorR;
+			pixels[totalOffset + 3] = colorA;
 #endif
 		}
 	}
